@@ -15,7 +15,7 @@ A major concept in this file system is the concept of a file and a generated fil
 The addressing of files is done using a 32 bit unsigned integer which translates into 4GB of addressable space with a maximum files size of 4GB.  There is a maximum of 65,535 files supported.
 ### Composition of File System
 
-![EWFS Memory Representation](/ewfs.png)
+![EWFS Memory Representation](/images/ewfs_memory_diagram.png)
 Figure 1:  EWFS Memory Representation.
 The intent of the file system header and the index are to reside in the flash or the index can be in RAM for faster accessing.  The motivation for this is to allow changes to the file system to be independent to the microcontroller code.  A good example of this would be a linked list array in the microcontroller flash that will point to the address of the file in external flash.  
 ### File System Header
