@@ -30,17 +30,16 @@ This includes only the text of the file names specified in the directory that th
 
 The pseudo code for the hash generation is as follows:
 ```
-##### Pseudo Code:
 hash = 0
 For each {character} in the string
     hash = hash << 1
     hash = hash + {character}
-##### Comments/Notes:
-Initialize the hash to 0
-Loop through all the characters in the file name string
-Shifting first allows the last bit to change with the new character for this iteration.  It also adds additional data that a checksum doesn’t.
-Adding character to hash is similar to checksum.
 ```
+Comments/Notes for the pseudo code:
+* Line 1:  Initialize the hash to 0
+* Line 2:  Loop through all the characters in the file name string
+* Line 3:  Shifting first allows the last bit to change with the new character for this iteration.  It also adds additional data that a checksum doesn’t.
+* Line 4:  Adding character to hash is similar to checksum.
 #### File Type
 In the file system index a file type of 1 represents a file stored in memory and 0 represents a generated file.  This file type can be set using a special file name of ewfslist.txt and listing the files that are generated in it, where each file is on its own line and ends with a carriage return.  A generated file will have the hash of the file name but the data offset and length fields will be set to 0.
 #### Data Offset
