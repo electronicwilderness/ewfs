@@ -1,12 +1,12 @@
 # Electronic Wilderness File System (EWFS)
 
 ## Introduction
-The driving force behind this file system is to provide a high performance file system for embedded microcontroller based devices.  It is intended to be used with flash memory where the file system predominantly reads data and not continuously updating files.  This use case greatly simplifies and narrows down the operational space not to include the file system concepts listed in section 2.4.
+The driving force behind this file system is to provide a high performance file system for embedded microcontroller based devices.  It is intended to be used with flash memory where the file system predominantly reads data and not continuously updating files.  This use case greatly simplifies and narrows down the operational space not to include the file system concepts listed below.
 ### Requirements
-Small memory (RAM) footprint.
-Support of directories and files.
-High performance for embedded systems.
-Support generated files by the microcontroller and stored files in flash.
+* Small memory (RAM) footprint.
+* Support of directories and files.
+* High performance for embedded systems.
+* Support generated files by the microcontroller and stored files in flash.
 ## Design
 The current implementation is done with a PIC32MZEF Starter Kit and was intended to replace the MPFS files.  The byte order of values are Least Significant Byte (LSB) first.
 
@@ -16,29 +16,29 @@ The addressing of files is done using a 32 bit unsigned integer which translates
 ### Composition of File System
 
 ![EWFS Memory Representation](/images/ewfs_memory_diagram.png)
-Figure 1:  EWFS Memory Representation.
+
 The intent of the file system header and the index are to reside in the flash or the index can be in RAM for faster accessing.  The motivation for this is to allow changes to the file system to be independent to the microcontroller code.  A good example of this would be a linked list array in the microcontroller flash that will point to the address of the file in external flash.  
 ### File System Header
 File system header information contains the following information:
-“EWFS” is the first 4 bytes of the file system, this indicates the file system type.
-A byte indicates the version of the file system
-2 bytes are indicating the number of files within the file system (LSB format)
+* “EWFS” is the first 4 bytes of the file system, this indicates the file system type.
+* A byte indicates the version of the file system
+* 2 bytes are indicating the number of files within the file system (LSB format)
 ### File System Index
 An index of the file system provides a fixed index memory size for each file to facilitate searching in the file system.  The file system index includes normal files and generated files.  The file name is not included in the index, instead a hash is used of the file name (including directory) to keep the RAM usage size small.
 #### File Name Hash
 This includes only the text of the file names specified in the directory that the image generator was run on.  For example, if the directory specified to the image generator was “/web_page”, the files within the folder will have the hash run on {web_page_sub_dir}/{file_name}.{extension}.
 
 The pseudo code for the hash generation is as follows:
-Pseudo Code
-Comments/Notes
 ```
+##### Pseudo Code:
 hash = 0
-Initialize the hash to 0
 For each {character} in the string
-Loop through all the characters in the file name string
     hash = hash << 1
-Shifting first allows the last bit to change with the new character for this iteration.  It also adds additional data that a checksum doesn’t.
     hash = hash + {character}
+##### Comments/Notes:
+Initialize the hash to 0
+Loop through all the characters in the file name string
+Shifting first allows the last bit to change with the new character for this iteration.  It also adds additional data that a checksum doesn’t.
 Adding character to hash is similar to checksum.
 ```
 #### File Type
