@@ -57,7 +57,7 @@ Where the following parameters represent:
   -i    Input directory with reference to current directory the tool is run in.
   -o    Output file name.
 ```
-## Not Included (Supported) Features
+## Not Supported Features
 * Multiple partitions or disks - it was only intended to work across one flash memory chip.
 * No wear leaving
 * No encryption
